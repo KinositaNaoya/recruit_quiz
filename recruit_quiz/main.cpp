@@ -1,4 +1,9 @@
 #define _USE_MATH_DEFINES
+
+#include "question.h"
+#include "exam_japanese.h"
+
+
 #include <iostream>
 #include <math.h>
 #include <cmath>
@@ -7,12 +12,7 @@
 #include <random>
 using namespace std;
 
-//問題文と答えをまとめる構造体
-struct Question
-{
-	string q;	//問題
-	string a;	//答え
-};
+
 
 //最大公約数を求める
 int gcd(int a, int b)
@@ -124,6 +124,17 @@ int main()
 
 	
 	cout << "[リクルート試験対策クイズ]\n";
+
+	cout << "教科を選んでください\n1 = 数学\n2 = 国語\n";
+	int subject;
+	cin >> subject;
+	if (subject == 2) {
+		questions = CreateKanjiExam();
+		const QuestionList idiomExam = CreateIdiomExam();
+		questions.insert(questions.end(), idiomExam.begin(), idiomExam.end());
+		QuestionList homophoneExam = CreateHomophoneExam();
+		questions.insert(questions.end(), homophoneExam.begin(), homophoneExam.end());
+	}
 	
 	for (const auto& e : questions) {
 		cout << e.q << "\n";
