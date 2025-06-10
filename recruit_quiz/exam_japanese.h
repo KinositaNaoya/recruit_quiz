@@ -6,3 +6,5 @@ QuestionList CreateKanjiExam();
 QuestionList CreateIdiomExam();
 
 QuestionList CreateHomophoneExam();
+
+QuestionList CreateAntonymExam();

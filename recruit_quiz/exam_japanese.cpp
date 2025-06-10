@@ -83,7 +83,7 @@ QuestionList CreateKanjiExam()
 }
 
 /// <summary>
-/// Šµ—p‹å‚ÌˆÓ–¡‚ğ“š‚¦‚é–â‘è‚ğì¬‚·‚é
+/// Šµ—p‹å‚ÌˆÓ–¡‚ğ“š‚¦‚é–â‘è‚ğì¬‚·‚éŠÖ”
 /// </summary>
 /// <returns></returns>
 QuestionList CreateIdiomExam() {
@@ -135,7 +135,7 @@ QuestionList CreateIdiomExam() {
 }
 
 /// <summary>
-/// “¯‚¶“Ç‚İ‚ÅˆÓ–¡‚ÌˆÙ‚È‚éŒê‚Ì–â‘è‚ğì¬‚·‚é
+/// “¯‚¶“Ç‚İ‚ÅˆÓ–¡‚ÌˆÙ‚È‚éŒê‚Ì–â‘è‚ğì¬‚·‚éŠÖ”
 /// </summary>
 /// <returns></returns>
 QuestionList CreateHomophoneExam()
@@ -238,5 +238,55 @@ QuestionList CreateHomophoneExam()
 		questions.push_back({ s,to_string(correctNo) });
 	}
 
+	return questions;
+}
+
+
+/// <summary>
+/// ‘Î‹`Œê‚Ì–â‘è‚ğì¬‚·‚éŠÖ”
+/// </summary>
+/// <returns></returns>
+QuestionList CreateAntonymExam()
+{
+	const struct {
+		const char* kanji[2];
+	}data[] = {
+		{"ˆÓ}(‚¢‚Æ)","œ“ˆÓ(‚µ‚¢)"},{"ù—v(‚¶‚ã‚æ‚¤)","‹Ÿ‹‹(‚«‚å‚¤‚«‚ã‚¤)"},
+		{"ŒÌˆÓ(‚±‚¢)","‰ß¸(‚©‚µ‚Â)"},{"B–†(‚ ‚¢‚Ü‚¢)","–¾—Ä(‚ß‚¢‚è‚å‚¤)"},
+		{"‹Ù’£(‚«‚ñ‚¿‚å‚¤)","’oŠÉ(‚µ‚©‚ñ)"},{"‰ß‘a(‚©‚»)","‰ß–§(‚©‚İ‚Â)"},
+		{"‰h“](‚¦‚¢‚Ä‚ñ)","¶‘J(‚³‚¹‚ñ)"},{"Á”ï(‚µ‚å‚¤‚Ğ)","¶Y(‚¹‚¢‚³‚ñ)"},
+		{"ˆÙ’[(‚¢‚½‚ñ)","³“(‚¹‚¢‚Æ‚¤)"},{"‘¸Œh(‚»‚ñ‚¯‚¢)","Œy•Ì(‚¯‚¢‚×‚Â)"},
+		{"Œx‰ú(‚¯‚¢‚©‚¢)","–û’f(‚ä‚¾‚ñ)"},{"‹A”[(‚«‚Ì‚¤)","‰‰ãˆ(‚¦‚ñ‚¦‚«)"},
+		{"ŒÍŠ‰(‚±‚©‚Â)","‘ò(‚¶‚ã‚ñ‚½‚­)"},{"Š£‘‡(‚©‚ñ‚»‚¤)","¼(‚µ‚Â‚¶‚ã‚ñ)"},
+		{"Ü^(‚µ‚å‚¤‚³‚ñ)","”l“|(‚Î‚Æ‚¤)"},{"’†•(‚¿‚ã‚¤‚·‚¤)","––’[(‚Ü‚Á‚½‚ñ)"},
+		{"â^(‚º‚Á‚³‚ñ)","“•](‚±‚­‚Ğ‚å‚¤)"},{"‘n‘¢(‚»‚¤‚¼‚¤)","–Í•í(‚à‚Ù‚¤)"},
+		{"‰ßŒƒ(‚©‚°‚«)","‰¸Œ’(‚¨‚ñ‚¯‚ñ)"},{"¿‘f(‚µ‚Á‚»)","‰Ø”ü(‚©‚Ñ)"},
+	};
+
+	constexpr int quizConst = 5;
+	QuestionList questions;
+	questions.reserve(quizConst);
+	const vector<int> indices = CreateRandomIndices(size(data));
+	random_device rd;
+
+	for (int i = 0; i < quizConst; i++) {
+		//ŠÔˆá‚Á‚½”Ô†‚ğƒ‰ƒ“ƒ_ƒ€‚É‘I‚Ô
+		const int correctIndex = indices[i];
+		vector<int> answers = CreateWrongIndices(size(data), correctIndex);
+
+		//ƒ‰ƒ“ƒ_ƒ€‚ÈˆÊ’u‚ğ³‚µ‚¢”Ô†‚Åã‘‚«
+		const int correctNo = uniform_int_distribution<>(1, 4)(rd);
+		answers[correctNo - 1] = correctIndex;
+
+		//–â‘è•¶‚ğì¬
+		const int object = uniform_int_distribution<>(1, 4)(rd);
+		const int other = (object + 1) % 2;
+		string s = "u" + string(data[correctIndex].kanji[object]) + 
+			"v‚Ì‘Î‹`Œê‚Æ‚µ‚Ä³‚µ‚¢”Ô†‚ğ‘I‚×B";
+		for (int j = 0; j < 4; j++) {
+			s += "\n  " + to_string(j + 1) + ":" + data[answers[j]].kanji[other];
+		}
+		questions.push_back({ s,to_string(correctNo) });
+	}
 	return questions;
 }
