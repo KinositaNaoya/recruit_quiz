@@ -9,12 +9,8 @@
 #include "../header/utility.h"
 
 
-#include <iostream>
-#include <math.h>
-#include <cmath>
-#include <string>
-#include <vector>
-#include <random>
+//#include <iostream>
+//#include <string>
 using namespace std;
 
 int main()

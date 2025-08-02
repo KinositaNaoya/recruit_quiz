@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include	<vector>
+#include <vector>
 
 //–â‘è•¶‚Æ“š‚¦‚ğ‚Ü‚Æ‚ß‚é\‘¢‘Ì
 struct Question

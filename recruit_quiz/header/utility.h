@@ -1,19 +1,38 @@
 #pragma once
 #include <vector>
 #include <random>
-#include<string>
+#include <string>
+#include <iostream>
+
 using namespace std;
 
-//最大公約数を求める
+/// <summary>
+/// 最大公約数を求める
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <returns></returns>
 int gcd(int a, int b);
 
-//配列をシャッフルする
+/// <summary>
+/// 配列をシャッフルする
+/// </summary>
+/// <param name="indices"></param>
 void Shuffle(vector<int>& indices);
 
-//シャッフルした配列番号を作成する
+/// <summary>
+/// シャッフルした配列番号を作成する
+/// </summary>
+/// <param name="n"></param>
+/// <returns></returns>
 vector<int>CreateRandomIndices(int n);
 
-//間違った番号の配列を作成する
+/// <summary>
+/// 間違った番号の配列を作成する
+/// </summary>
+/// <param name="n"></param>
+/// <param name="correctIndex"></param>
+/// <returns></returns>
 vector<int> CreateWrongIndices(int n, int correctIndex);
 
 
