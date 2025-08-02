@@ -3,6 +3,8 @@
 #include "question.h"
 #include "exam_japanese.h"
 #include "exam_english.h"
+#include "exam_politics.h"
+#include "utility.h"
 
 
 #include <iostream>
@@ -121,15 +123,16 @@ int main()
 		to_string(x) +
 		"人のうち" + to_string(y) +
 		"人を選ぶ組み合わせは何通りあるか？",
-		to_string(z) });
+		to_string(z) 
+	});
 
 	
 	cout << "[リクルート試験対策クイズ]\n";
 
-	cout << "教科を選んでください\n1 = 数学\n2 = 国語\n3 = 英語\n";
+	cout << "教科を選んでください\n1 = 数学\n2 = 国語\n3 = 英語\n4 = 物理\n5 = 地理\n6 = 政治\n";
 	int subject;
 	cin >> subject;
-	if (subject == 2) {
+	if (subject == 2) {// 国語
 		questions = CreateKanjiExam();
 
 		const QuestionList idiomExam = CreateIdiomExam();
@@ -145,18 +148,40 @@ int main()
 		questions.insert(questions.end(), synonymExam.begin(), synonymExam.end());
 
 	}
-	else if (subject == 3) {
+	else if (subject == 3) {// 英語
 		questions = CreateEnglishWordExam();
 
 		QuestionList phraseExam = CreateEnglishPhraseExam();
 		questions.insert(questions.end(), phraseExam.begin(), phraseExam.end());
 
 	}
+	else if (subject == 4) {
+		// 何もしない
+		cout << "未実装\n";
+		return 0;
+
+	}
+	else if (subject == 5) {
+		// 何もしない
+		cout << "未実装\n";
+		return 0;
+	}
+	else if (subject == 6) {// 政治
+		questions = CreatePoliticsExam();
+	}
 	
 	for (const auto& e : questions) {
 		cout << e.q << "\n";
 		string answer;
 		cin >> answer;
+
+		//入力された答えをSJISからASCIIに変換する
+		const string ascii = ConvertSjisNumberToAscii(answer);
+		//変換が成功した場合はASCII文字列に置き換える
+		if(!ascii.empty()) {
+			answer = ascii;
+		}
+
 		if (answer == e.a) {
 			cout << "正解！\n";
 		}

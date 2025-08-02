@@ -79,3 +79,47 @@ vector<string> Split(const string& s, char c)
 	v.push_back(string(begin, end));
 	return v;
 }
+
+// Shift_JISの数字をASCIIの数字に変換する関数
+string ConvertSjisNumberToAscii(const string& sjis)
+{
+	//数値文字のSJISからASCIIへの変換表
+	static const struct {
+		unsigned int sjis;
+		char ascii;
+	}conversionTable[] = {
+		{0x82A0, '0'}, // 0
+		{0x82A1, '1'}, // 1
+		{0x82A2, '2'}, // 2
+		{0x82A3, '3'}, // 3
+		{0x82A4, '4'}, // 4
+		{0x82A5, '5'}, // 5
+		{0x82A6, '6'}, // 6
+		{0x82A7, '7'}, // 7
+		{0x82A8, '8'}, // 8
+		{0x82A9, '9'}, // 9
+		{0x8144, '.'}, // 9
+		{0x817c, '-'}, // 9
+	};
+
+	//文字コードを変換する
+	string ascii;
+	for(auto i = sjis.begin(); i != sjis.end(); ++i) {
+		const unsigned char a = i[0];
+		if (a < 0x80) {	// ASCII文字はそのままコピーする
+			ascii.push_back(*i);
+		}
+		else {			// SJIS文字の場合はASCII文字に変換する
+			const unsigned int code = a * 0x100 + (unsigned int)i[1];
+			const auto itr = find_if(begin(conversionTable), end(conversionTable),
+				[code](const auto& e) {return e.sjis == code; });
+			if (itr == end(conversionTable)) {
+				break;	//変換できない文字が見つかったら終了
+			}
+			ascii.push_back(itr->ascii);
+			i++;//２バイト文字なので1バイト余分に進める
+		}
+	} // for i
+
+	return string();
+}
