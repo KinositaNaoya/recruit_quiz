@@ -4,6 +4,9 @@
 #include<string>
 using namespace std;
 
+//最大公約数を求める
+int gcd(int a, int b);
+
 //配列をシャッフルする
 void Shuffle(vector<int>& indices);
 

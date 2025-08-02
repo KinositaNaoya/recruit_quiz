@@ -1,6 +1,6 @@
 
-#include "exam_japanese.h"
-#include "utility.h"
+#include "../header/exam_japanese.h"
+#include "../header/utility.h"
 
 #include <random>
 

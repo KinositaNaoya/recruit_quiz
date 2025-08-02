@@ -1,8 +1,20 @@
 
-#include "utility.h"
+#include "../header/utility.h"
 
 #include <random>
 using namespace std;
+
+//最大公約数を求める
+int gcd(int a, int b)
+{
+	//余りが0になった時の除数を返す
+	while (b) {
+		int r = a % b;
+		a = b;//除数を次の被除数にする
+		b = r;//余りを次の除数にする
+	}
+	return a;
+}
 
 //ランダムな番号配列を作成する
 vector<int>CreateRandomIndices(int n) {

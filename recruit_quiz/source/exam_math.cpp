@@ -1,35 +1,12 @@
 #define _USE_MATH_DEFINES
 
-#include "question.h"
-#include "exam_japanese.h"
-#include "exam_english.h"
-#include "exam_politics.h"
-#include "utility.h"
+#include "../header/exam_math.h"
+#include "../header/utility.h"
 
-
-#include <iostream>
-#include <math.h>
-#include <cmath>
-#include <string>
-#include <vector>
 #include <random>
-using namespace std;
 
 
-
-//最大公約数を求める
-int gcd(int a, int b)
-{
-	//余りが0になった時の除数を返す
-	while (b) {
-		int r = a % b;
-		a = b;//除数を次の被除数にする
-		b = r;//余りを次の除数にする
-	}
-	return a;
-}
-
-int main()
+QuestionList CreaetMathematicsExam()
 {
 	vector<Question> questions(3);
 	random_device rd;
@@ -63,8 +40,8 @@ int main()
 	x = uniform_int_distribution<>(1, 20)(rand);
 	y = uniform_int_distribution<>(1, 5)(rand) * 2;
 	questions.push_back({
-		"面積" + to_string(x * y / 2) + 
-		"cm^2、底辺" + to_string(y) + 
+		"面積" + to_string(x * y / 2) +
+		"cm^2、底辺" + to_string(y) +
 		"cmの三角形の高さを求めよ。",
 		to_string(x) });
 
@@ -113,7 +90,7 @@ int main()
 	x = uniform_int_distribution<>(3, 6)(rand);
 	y = uniform_int_distribution<>(1, x)(rand);
 	z = 1;
-	for (int i = 0; i < y; i++){
+	for (int i = 0; i < y; i++) {
 		z *= x - 1;
 	}
 	for (int i = 0; i < y; i++) {
@@ -123,72 +100,8 @@ int main()
 		to_string(x) +
 		"人のうち" + to_string(y) +
 		"人を選ぶ組み合わせは何通りあるか？",
-		to_string(z) 
-	});
+		to_string(z)
+		});
 
-	
-	cout << "[リクルート試験対策クイズ]\n";
-
-	cout << "教科を選んでください\n1 = 数学\n2 = 国語\n3 = 英語\n4 = 物理\n5 = 地理\n6 = 政治\n";
-	int subject;
-	cin >> subject;
-	if (subject == 2) {// 国語
-		questions = CreateKanjiExam();
-
-		const QuestionList idiomExam = CreateIdiomExam();
-		questions.insert(questions.end(), idiomExam.begin(), idiomExam.end());
-
-		QuestionList homophoneExam = CreateHomophoneExam();
-		questions.insert(questions.end(), homophoneExam.begin(), homophoneExam.end());
-
-		QuestionList antonymExam = CreateAntonymExam();
-		questions.insert(questions.end(), antonymExam.begin(), antonymExam.end());
-
-		QuestionList synonymExam = CreateSynonymExam();
-		questions.insert(questions.end(), synonymExam.begin(), synonymExam.end());
-
-	}
-	else if (subject == 3) {// 英語
-		questions = CreateEnglishWordExam();
-
-		QuestionList phraseExam = CreateEnglishPhraseExam();
-		questions.insert(questions.end(), phraseExam.begin(), phraseExam.end());
-
-	}
-	else if (subject == 4) {
-		// 何もしない
-		cout << "未実装\n";
-		return 0;
-
-	}
-	else if (subject == 5) {
-		// 何もしない
-		cout << "未実装\n";
-		return 0;
-	}
-	else if (subject == 6) {// 政治
-		questions = CreatePoliticsExam();
-	}
-	
-	for (const auto& e : questions) {
-		cout << e.q << "\n";
-		string answer;
-		cin >> answer;
-
-		//入力された答えをSJISからASCIIに変換する
-		const string ascii = ConvertSjisNumberToAscii(answer);
-		//変換が成功した場合はASCII文字列に置き換える
-		if(!ascii.empty()) {
-			answer = ascii;
-		}
-
-		if (answer == e.a) {
-			cout << "正解！\n";
-		}
-		else
-		{
-			cout << "間違い！正解は" << e.a << "\n";
-		}
-	}	// for questions
-
+	return questions;
 }

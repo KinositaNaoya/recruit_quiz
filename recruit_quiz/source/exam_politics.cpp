@@ -1,9 +1,11 @@
-#include "exam_politics.h"
-#include "utility.h"
+#include "../header/exam_politics.h"
+#include "../header/utility.h"
 #include <fstream>
 #include <iostream>
 #include <random>
 #include <unordered_map>
+#include <filesystem>
+
 using namespace std;
 
 /*
@@ -20,10 +22,12 @@ QuestionList CreatePoliticsExam() {
 	unordered_map<string, vector<PoliticsData>>data;
 
 	{//政治問題データを読み込む
-		constexpr char filename[] = "japanese_politics.txt";
+		constexpr char filename[] = "text/japanese_politics.txt";
+
 		ifstream ifs(filename);		//txtを読み込む？
 		if (!ifs) {
 			cerr << "エラー" << filename << "を読み込めません\n";
+            cout << "カレントディレクトリ:" << std::filesystem::current_path() << endl;
 			return {};
 		}
 
