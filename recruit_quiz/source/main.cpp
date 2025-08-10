@@ -65,6 +65,7 @@ int main()
 				cout << "選択された項目はありません、もう一度選んでください。\n";
 				subject = 0;
 			}
+
 		} while (subject == 0);
 	}	//教科選択
 	

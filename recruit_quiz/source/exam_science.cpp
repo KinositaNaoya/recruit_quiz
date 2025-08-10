@@ -90,6 +90,10 @@ QuestionList CreatePhysicsExam()
 		if (v < 0) {
 			v = -v;
 			answer = '-';
+		}
+		answer += to_string(v / 10);
+		if (v % 10) {
+			answer += '.';	//小数部がある場合は小数部を文字列化
 			answer += '0' + v % 10;
 		}
 		questions.push_back({
@@ -101,6 +105,63 @@ QuestionList CreatePhysicsExam()
 			});
 
 	}	//重力加速度
+
+	{	// 浮力
+		int s = uniform_int_distribution<>(5, 20)(rd);	//底面積
+		int h = uniform_int_distribution<>(2, 10)(rd);	//高さ
+		int v = s * h + 5;	//体積(四捨五入の為に5を加える)
+
+		string answer = to_string(v / 100);	//整数部を文字列に変換
+		v /= 10;	//小数点以下第2位にあたる部分を捨てる
+		if (v % 10) {	//小数点以下第1位が0以外、小数部を文字列に加える
+			answer += '.';
+			answer += '0' + v % 10;
+		}
+		questions.push_back({
+			"質量100gの物体にはたらく重力を1Nとする。\n底面積" + to_string(s) + "cm^2、高さ" +
+			to_string(h) +"cmの円柱を完全に水中に沈めた。\n"+
+			"Xの値を小数点以下第2位を四捨五入して求めよ。",answer
+			});
+
+		int x = uniform_int_distribution<>(20, 50)(rd) * 10;	//重さ(水中)
+		int y = uniform_int_distribution<>(x / 2, x - 1)(rd);	//重さ(水中)
+		int z = x - y + 5;
+		answer = to_string(z / 100);	//整数部を文字列に変換
+		z /= 10;	//小数点以下第2位にあたる部分を捨てる
+		if (z % 10) {	//小数点以下第1位が0以外、小数部を文字列に加える
+			answer += '.';
+			answer += '0' + z % 10;
+		}
+		questions.push_back({
+			"質量100gの物体にはたらく重力を1Nとする。\nある物体の重さをばねはかりではかると、" +
+			to_string(x) + "gを示した。\n" + "この物体を完全に水に入れたところ、ばねはかりは" + 
+			to_string(y) + "gを示した。\nこのとき、物体にはたらく浮力はXニュートンである。\n" +
+			"Xの値を小数点以下第2位を四捨五入して求めよ。",answer
+			});
+
+		int p0 = uniform_int_distribution<>(1, 9)(rd) * 100;	// 密度
+		s = uniform_int_distribution<>(5, 10)(rd);				// 底面積
+		h = uniform_int_distribution<>(5, 10)(rd);				// 高さ
+		z = h * p0 + 50;
+		answer = to_string(z / 1000);
+		z /= 100;
+		if (z % 10) {
+			answer += '.';
+			answer += '0' + z % 10;
+		}
+		questions.push_back({
+			"密度" + to_string(p0) + "kg/m^3、底面積" + to_string(s) + "cm^2、高さ" +
+			to_string(h) + "cmの物体を水に沈めようとしたところ、Xcm沈んで静止した。\n" +
+			"Xの値を小数点以下第一位まで求めよ。",answer
+			});
+	}	// 浮力
+
+	{ // ばね
+	
+	} // ばね
+
+	
+
 
 	return questions;
 }

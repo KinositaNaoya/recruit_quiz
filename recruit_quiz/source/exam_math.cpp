@@ -5,7 +5,9 @@
 
 #include <random>
 
-
+/// <summary>
+/// ”Šw‚Ì–â‘è‚ğì¬‚·‚é
+/// </summary>
 QuestionList CreaetMathematicsExam()
 {
 	vector<Question> questions(3);
