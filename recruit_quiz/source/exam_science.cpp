@@ -157,8 +157,91 @@ QuestionList CreatePhysicsExam()
 	}	// 浮力
 
 	{ // ばね
-	
+
+		int a = uniform_int_distribution<>(10, 30)(rd);		//自然長(cm)
+		int x = uniform_int_distribution<>(1, a / 2)(rd);	//自然長からの変化量(cm)
+		int m = uniform_int_distribution<>(1, 20)(rd) * 10;	//質量(g)
+		int k = 100 * m / x + 5;	//kの100倍を求め、四捨五入のため5を足す。
+		string answer = to_string(k / 100);	//整数部を文字列に変換
+		k /= 10;	//小数点以下第2位にあたる部分を捨てる
+		if (k % 10) {
+			answer += '.';
+			answer += '0' + k % 10;
+		}
+		questions.push_back({
+			"重力加速度を10m/s^2とする。\n長さ" + to_string(x) + "cmのばねの先端に" +
+			to_string(m) + "gの重りを付けて、天井から吊り下げた。\nすると、ばねの長さが" +
+			to_string(a + x) + "cmになった。\n" +
+			"このばねの「ばね定数」を小数点以下第2位を四捨五入して求めよ。",answer
+			});
+
+
+		int k1 = uniform_int_distribution<>(1, 10)(rd);	//ばね定数1(N/m)
+		int k2 = uniform_int_distribution<>(1, 9)(rd);	//ばね定数2(N/m)
+		if (k2 >= k1) {
+			k2++;
+		}
+		m = uniform_int_distribution<>(1, 10)(rd) * 10;	//質量(g)
+		x = 100 * m * (k1 + k2) / (k1 * k2) + 5;
+		answer = to_string(x / 100);	//整数部を文字列に変換
+		if (x % 10) {					//小数点以下第1位が0以外、小数部を文字列に加える
+			answer += '.';
+			answer += '0' + x % 10;
+		}
+		questions.push_back({
+			"重力加速度を10m/s^2をする。\nばね定数が" + to_string(k1) + "と" + to_string(k2) +
+			"の2つのばねを直列につなぎ、" + to_string(m) + "gの重りを付けて天井から吊り下げた。\n" +
+			"すると、ばねの長さが合わせてXcm伸びて静止した。\n" +
+			"Xの値を小数点以下第2位を四捨五入して求めよ。"
+			,answer
+			});
+
+		
+		k1 = uniform_int_distribution<>(1, 10)(rd);	//ばね定数1(N/m)
+		k2 = uniform_int_distribution<>(1, 10)(rd);	//ばね定数2(N/m)
+		m = uniform_int_distribution<>(1, 10)(rd) * 10;	//質量(g)
+		x = 100 * m / (k1 + k2) + 5;
+		answer = to_string(x / 100);
+		x /= 10;
+		if (x % 10) {
+			answer += '.';
+			answer += '0' + x % 10;
+		}
+		questions.push_back({
+			"重力加速度を10m/s^2とする。\nばね定数が" + to_string(k1) + "と" + to_string(k2) +
+			"の2つのばねを水平な天井に固定し、ばねの下端に木の棒を水平に取り付けた。\n" +
+			"この棒の中央に質量" + to_string(m) + "gの重りを吊り下げた。\n" +
+			"すると、ばねの長さがそれぞれXmだけ伸びて静止した。\n"+
+			"Xの値ｗｐ小数点以下第位2位を四捨五入して求めよ。",
+			answer
+			});
+
+
 	} // ばね
+
+	{ // 振り子
+		int l = uniform_int_distribution<>(1, 10)(rd);	//長さ(m)の平方根
+		int m = uniform_int_distribution<>(1, 10)(rd);	//質量(g)
+		questions.push_back({
+			"長さ" + to_string(1 * 1) + "mの糸に質量" + to_string(m) +
+			"kgの重りをつけ、わずかに揺らしたところ、周期はX秒であった。Xの値を求めよ。\n" +
+			"なお、重力加速度gと円周率πについて、π = √gがなりたつものとする。",
+			to_string(2 * 1)
+			});
+
+		l = uniform_int_distribution<>(1, 10)(rd);	//長さ(m)の平方根
+		m = uniform_int_distribution<>(1, 10)(rd);	//質量(kg)
+		int max_v = (int)sqrt(20 * 1);	//速度の上限(2gh = v^2を根拠とする)
+		int v = uniform_int_distribution<>(1, max_v)(rd);	//速度(m/s)
+		questions.push_back({
+			"重力加速度を10m/s^2とする。\n長さ" + to_string(l) + "mの糸に質量" + to_string(m) +
+			"kgのおもりをつけた振り子がある。\nこのおもりを最下点から高さ"+
+			to_string(v * v *100 / 20) + "cmの位置で静かに放した。\n" +
+			"このとき、おもりが最下点を通過するときの速度をm/s単位で求めよ。"+
+			to_string(v)
+			});
+
+	} // 振り子
 
 	
 
