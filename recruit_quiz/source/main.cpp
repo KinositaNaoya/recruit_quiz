@@ -5,6 +5,7 @@
 #include "../header/exam_japanese.h"
 #include "../header/exam_english.h"
 #include "../header/exam_science.h"
+#include "../header/exam_geography.h"
 #include "../header/exam_politics.h"
 #include "../header/utility.h"
 
@@ -54,9 +55,7 @@ int main()
 				questions = CreatePhysicsExam();
 			}
 			else if (subject == 5) {
-				// ‰½‚à‚µ‚È‚¢
-				cout << "–¢ŽÀ‘•\n";
-				return 0;
+				questions = CreatePrefecturesExam();	// ’n—
 			}
 			else if (subject == 6) {// ­Ž¡
 				questions = CreatePoliticsExam();
