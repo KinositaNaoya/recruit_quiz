@@ -8,7 +8,8 @@
 #include "../header/exam_english.h"
 #include "../header/exam_science.h"
 #include "../header/exam_politics.h"
-#include "../header//exam_economics.h"
+#include "../header/exam_economics.h"
+#include "../header/exam_geography.h"
 #include "../header/utility.h"
 
 using namespace std;
@@ -24,7 +25,7 @@ int main()
 		{ "‘Œê",CreateJapaneseExam },
 		{ "‰pŒê",CreateEnglish },
 		{ "•¨—",CreaetMathematicsExam },
-		//{ "’n—", },
+		{ "’n—",CreatePrefecturesExam},
 		{ "­¡",CreatePoliticsExam },
 		{ "ŒoÏ",CreateEconomicsExam },
 	};

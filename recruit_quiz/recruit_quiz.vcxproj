@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="source\exam_economics.cpp" />
     <ClCompile Include="source\exam_english.cpp" />
+    <ClCompile Include="source\exam_geography.cpp" />
     <ClCompile Include="source\exam_japanese.cpp" />
     <ClCompile Include="source\exam_math.cpp" />
     <ClCompile Include="source\exam_politics.cpp" />
@@ -31,6 +32,7 @@
   <ItemGroup>
     <ClInclude Include="header\exam_economics.h" />
     <ClInclude Include="header\exam_english.h" />
+    <ClInclude Include="header\exam_geography.h" />
     <ClInclude Include="header\exam_japanese.h" />
     <ClInclude Include="header\exam_math.h" />
     <ClInclude Include="header\exam_politics.h" />
