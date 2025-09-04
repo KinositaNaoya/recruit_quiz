@@ -36,7 +36,11 @@
     <ClCompile Include="source\exam_math.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="source\exam_economics.cpp">
+=======
+    <ClCompile Include="source\exam_geography.cpp">
+>>>>>>> 139fca0b7cf973f16e2f3f591935fa91f6205717
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,7 +66,11 @@
     <ClInclude Include="header\exam_math.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="header\exam_economics.h">
+=======
+    <ClInclude Include="header\exam_geography.h">
+>>>>>>> 139fca0b7cf973f16e2f3f591935fa91f6205717
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
