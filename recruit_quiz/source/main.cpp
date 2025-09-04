@@ -1,4 +1,6 @@
-//#define _USE_MATH_DEFINES
+
+//メモ　11/18[総合テスト追加]から
+
 
 #include "../header/question.h"
 #include "../header/exam_math.h"
@@ -6,15 +8,27 @@
 #include "../header/exam_english.h"
 #include "../header/exam_science.h"
 #include "../header/exam_politics.h"
+#include "../header//exam_economics.h"
 #include "../header/utility.h"
 
-
-//#include <iostream>
-//#include <string>
 using namespace std;
 
 int main()
 {
+	//教科データ配列
+	static const struct{
+		const char* name;		//教科名
+		QuestionList(*create)();//問題作成関数のアドレス
+	}subjectData[] = {
+		{ "数学",CreaetMathematicsExam },
+		{ "国語",CreateJapaneseExam },
+		{ "英語",CreateEnglish },
+		{ "物理",CreaetMathematicsExam },
+		//{ "地理", },
+		{ "政治",CreatePoliticsExam },
+		{ "経済",CreateEconomicsExam },
+	};
+
 	QuestionList questions;//問題集
 
 	
@@ -23,45 +37,16 @@ int main()
 		cout << "[リクルート試験対策クイズ]\n";
 
 		do{	// while (subject == 0)
-			cout << "教科を選んでください\n1 = 数学\n2 = 国語\n3 = 英語\n4 = 物理\n5 = 地理\n6 = 政治\n";
+			cout << "教科を選んでください\n";
+			for (int i = 0; i < size(subjectData); i++) {
+				cout << i + 1 << '=' << subjectData[i].name << '\n';
+			}
 			cin >> subject;
 
-			if (subject == 1) {		// 数学
-				questions = CreaetMathematicsExam();
+			if (subject > 0 && subject <= size(subjectData)) {
+				questions = subjectData[subject - 1].create();
 			}
-			else if (subject == 2) {// 国語
-				questions = CreateKanjiExam();	//問題集作成 <- 漢字の読み取り問題を追加
-
-				QuestionList idiomExam = CreateIdiomExam();								//慣用句の問題集を追加
-				questions.insert(questions.end(), idiomExam.begin(), idiomExam.end());	//問題集に慣用句の問題集を追加(以下同文)
-
-				QuestionList homophoneExam = CreateHomophoneExam();
-				questions.insert(questions.end(), homophoneExam.begin(), homophoneExam.end());
-
-				QuestionList antonymExam = CreateAntonymExam();
-				questions.insert(questions.end(), antonymExam.begin(), antonymExam.end());
-
-				QuestionList synonymExam = CreateSynonymExam();
-				questions.insert(questions.end(), synonymExam.begin(), synonymExam.end());
-			}
-			else if (subject == 3) {// 英語
-				questions = CreateEnglishWordExam();
-
-				QuestionList phraseExam = CreateEnglishPhraseExam();
-				questions.insert(questions.end(), phraseExam.begin(), phraseExam.end());
-			}
-			else if (subject == 4) {//物理
-				questions = CreatePhysicsExam();
-			}
-			else if (subject == 5) {
-				// 何もしない
-				cout << "未実装\n";
-				return 0;
-			}
-			else if (subject == 6) {// 政治
-				questions = CreatePoliticsExam();
-			}
-			else {
+			else{
 				cout << "選択された項目はありません、もう一度選んでください。\n";
 				subject = 0;
 			}
@@ -85,10 +70,30 @@ int main()
 			if (answer == e.a) {
 				cout << "正解！\n";
 			}
-			else
-			{
-				cout << "間違い！正解は" << e.a << "\n";
-			}
+			else if (e.b.empty()) {
+				//答えが1つだけの場合
+				cout << "間違い！　正解は" << e.a << "\n";
+			}else{
+				//答えが複数ある場合、いずれかと一致すれば正解とする
+				bool isMatch = false;
+				for (const auto& b : e.b) {
+					if (answer == b) {
+						isMatch = true;
+						break;
+					}
+				}
+				
+				//比較結果を出力
+				if (isMatch) {
+					cout << "正解！\n";
+				}else {
+					cout << "間違い！　正解は" << e.a << "(または";
+					for (auto& b : e.b) {
+						cout << "、" << b;
+					}
+					cout << ")\n";
+				}
+			} // if answer == e.a
 		}	// for questions
 	}	//問題解答
 	

@@ -361,3 +361,29 @@ QuestionList CreateSynonymExam()
 
 	return questions;
 }
+
+/// <summary>
+/// 国語の問題を作成する
+/// </summary>
+/// <returns></returns>
+QuestionList CreateJapaneseExam()
+{
+	QuestionList questions;
+
+	questions = CreateKanjiExam();	//問題集作成 <- 漢字の読み取り問題を追加
+
+	QuestionList idiomExam = CreateIdiomExam();								//慣用句の問題集を追加
+	questions.insert(questions.end(), idiomExam.begin(), idiomExam.end());	//問題集に慣用句の問題集を追加(以下同文)
+
+	QuestionList homophoneExam = CreateHomophoneExam();
+	questions.insert(questions.end(), homophoneExam.begin(), homophoneExam.end());
+
+	QuestionList antonymExam = CreateAntonymExam();
+	questions.insert(questions.end(), antonymExam.begin(), antonymExam.end());
+
+	QuestionList synonymExam = CreateSynonymExam();
+	questions.insert(questions.end(), synonymExam.begin(), synonymExam.end());
+
+	return questions;
+}
+
